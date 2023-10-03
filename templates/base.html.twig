@@ -13,15 +13,22 @@
     {# le favicon #}
     <link rel="icon"
           href="{{ asset('img/favicon.png') }}">
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #} {% block stylesheets %} {{ encore_entry_link_tags('app') }} {# notre css #}
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %} {{ encore_entry_link_tags('app') }}
+        {# notre css #}
         <link rel="stylesheet"
-              href="{{ asset('css/styles.css') }}"> {% endblock %} {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
+              href="{{ asset('css/styles.css') }}"> {% endblock %}
+    {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
 </head>
 <body>
 <header>
     <div class="container"><h1 class="header-logo"><a href="{{ path('main_home') }}" title="Go back to homepage"> <img
                         src="{{ asset('img/logo.svg') }}" alt="Bucket-List Logo">Bucket-List </a></h1>
-        <nav class="header-nav"><a href="{{ path('main_home') }}" title="Go back to homepage">Home</a></nav>
+        <nav class="header-nav">
+            <a href="{{ path('main_home') }}" title="Go back to homepage">Home</a>
+            <a href="{{ path('wish_list') }}" title="Tous les souhaits">All wishes</a>
+            <a href="{{ path('main_about_us') }}" title="a propos">About us</a>
+        </nav>
     </div>
 </header>
 {# contenu principal de chaque page #}
