@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus dolorem facere fugiat impedit incidunt
-        mollitia nulla quaerat repudiandae velit voluptatibus! Dignissimos eum fuga libero nobis voluptatibus! Fugit
-        inventore laboriosam suscipit?
+    <div>
+        {% for membre in equipe %}
+            <p>{{ membre.firstname }}</p>
+            <img src="{{ membre.picture }}" alt="">
+        {% endfor %}
     </div>
 {% endblock %}
 
