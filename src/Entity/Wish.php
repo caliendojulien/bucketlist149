@@ -29,6 +29,12 @@ class Wish
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime();
+        $this->isPublished = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
