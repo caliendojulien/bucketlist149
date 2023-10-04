@@ -9,7 +9,7 @@ class WishTest extends WebTestCase
     public function testWishList(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/wish/list');
+        $client->request('GET', '/wish/list');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Liste des souhaits');
