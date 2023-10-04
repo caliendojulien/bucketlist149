@@ -1,0 +1,17 @@
+image: jakzal/phpqa
+
+before_script:
+  - composer install
+
+cache:
+  paths:
+    - vendor/
+
+stages:
+  - Tests unitaires
+
+phpunit:
+  stage: Tests unitaires
+  script:
+    - php bin/phpunit
+  allow_failure: false
