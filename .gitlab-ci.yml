@@ -12,6 +12,11 @@ stages:
 
 phpunit:
   stage: Tests unitaires
+  variables:
+    DATABASE_URL: "sqlite:///%kernel:project_dir%/var/data.db"
   script:
+    - php bin/console d:d:d --force --env=test
+    - php bin/console d:d:c --env=test
+    - php bin/console d:s:u --force --env=test
     - php bin/phpunit
   allow_failure: false
