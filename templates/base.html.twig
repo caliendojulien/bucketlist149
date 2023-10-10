@@ -25,6 +25,13 @@
             <a href="{{ path('wish_list') }}" title="Tous les souhaits">All wishes</a>
             <a href="{{ path('wish_new') }}" title="Ajouter un souhait">Add a wish</a>
             <a href="{{ path('main_about_us') }}" title="a propos">About us</a>
+            {% if not app.user %}
+                <a href="{{ path('app_login') }}" title="login">Login</a>
+                <a href="{{ path('app_register') }}" title="register">Register</a>
+            {% endif %}
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}" title="logout">Logout</a>
+            {% endif %}
         </nav>
     </div>
 </header>

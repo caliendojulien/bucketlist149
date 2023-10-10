@@ -6,6 +6,7 @@ use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\UserRepository;
 use App\Repository\WishRepository;
+use App\Services\Censurator;
 use App\Services\envoieEmail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,16 +38,18 @@ class WishController extends AbstractController
     public function new(
         Request                $request,
         EntityManagerInterface $entityManager,
-        envoieEmail            $envoieEmail
+        Censurator $censurator
     ): Response
     {
-        $envoieEmail->envoi("new");
         $wish = new Wish(); // On créé une instance de souhait
         $wish->setAuteur($this->getUser()->getUserIdentifier());
         $wishForm = $this->createForm(WishType::class, $wish); // On créé un formulaire associé a l'instance
         $wishForm->handleRequest($request); // On regarde ce qui est présent dans la requete
         if ($wishForm->isSubmitted() && $wishForm->isValid()) { // Si le formulaire a ete soumis
             $wish->setDateCreated(new \DateTime()); // On initialise la date de création a maintenant
+            // Censurator
+            $wish->setDescription($censurator->purify($wish->getDescription()));
+            // Censurator
             $entityManager->persist($wish); // On prépare la requete SQL
             $entityManager->flush(); // On execute la requete SQL
             $this->addFlash('success', 'Le souhait a bien été ajouté'); // Ajout du msg flash
