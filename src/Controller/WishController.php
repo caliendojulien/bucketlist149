@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Repository\UserRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/wish', name: 'wish')]
 class WishController extends AbstractController
@@ -30,12 +32,19 @@ class WishController extends AbstractController
     }
 
     #[Route('/new', name: '_new')]
+    #[IsGranted("ROLE_USER")]
     public function new(
         Request                $request,
         EntityManagerInterface $entityManager
+//        UserRepository $userRepository
     ): Response
     {
         $wish = new Wish(); // On créé une instance de souhait
+//        $utilisateur = $userRepository->findOneBy(
+//            ["username" => $this->getUser()->getUserIdentifier()]
+//        );
+//        $wish->setAuteur($utilisateur->getUsername());
+        $wish->setAuteur($this->getUser()->getUserIdentifier());
         $wishForm = $this->createForm(WishType::class, $wish); // On créé un formulaire associé a l'instance
         $wishForm->handleRequest($request); // On regarde ce qui est présent dans la requete
         if ($wishForm->isSubmitted() && $wishForm->isValid()) { // Si le formulaire a ete soumis
@@ -52,6 +61,7 @@ class WishController extends AbstractController
     }
 
     #[Route('/delete/{wish}', name: '_delete')]
+    #[IsGranted("ROLE_USER")]
     public function delete(
         Wish                   $wish,
         EntityManagerInterface $entityManager

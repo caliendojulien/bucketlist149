@@ -28,7 +28,7 @@ class DefaultTest extends WebTestCase
         $crawler = $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $liens = $crawler->filter('nav a');
-        $this->assertCount(3, $liens);
+        $this->assertCount(4, $liens);
         $this->assertSelectorTextContains('h1 a', 'Bucket-List');
     }
 }

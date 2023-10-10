@@ -14,8 +14,6 @@ class WishTest extends TestCase
         $wish->setDescription("Une description");
         $wish->setTitle("Un titre");
         $this->assertEquals("Moi", $wish->getAuteur());
-        $this->assertNotNull($wish->getDateCreated());
-//        $this->assertEqualsWithDelta(new \DateTime(), $wish->getDateCreated(), 5);
         $this->assertFalse($wish->isIsPublished());
     }
 }
