@@ -6,6 +6,7 @@ use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\UserRepository;
 use App\Repository\WishRepository;
+use App\Services\envoieEmail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,15 +36,12 @@ class WishController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function new(
         Request                $request,
-        EntityManagerInterface $entityManager
-//        UserRepository $userRepository
+        EntityManagerInterface $entityManager,
+        envoieEmail            $envoieEmail
     ): Response
     {
+        $envoieEmail->envoi("new");
         $wish = new Wish(); // On créé une instance de souhait
-//        $utilisateur = $userRepository->findOneBy(
-//            ["username" => $this->getUser()->getUserIdentifier()]
-//        );
-//        $wish->setAuteur($utilisateur->getUsername());
         $wish->setAuteur($this->getUser()->getUserIdentifier());
         $wishForm = $this->createForm(WishType::class, $wish); // On créé un formulaire associé a l'instance
         $wishForm->handleRequest($request); // On regarde ce qui est présent dans la requete
@@ -64,9 +62,11 @@ class WishController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function delete(
         Wish                   $wish,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        envoieEmail            $envoieEmail
     ): Response
     {
+        $envoieEmail->envoi("delete");
         $entityManager->remove($wish);
         $entityManager->flush();
         $this->addFlash('success', 'Le souhait a bien été supprimé');
