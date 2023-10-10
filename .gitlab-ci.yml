@@ -18,5 +18,5 @@ phpunit:
     - php bin/console d:d:d --force --env=test
     - php bin/console d:d:c --env=test
     - php bin/console d:s:u --force --env=test
-    - php bin/phpunit -c app --coverage-text --colors=never
+    - php bin/phpunit --coverage-text --colors=never
   allow_failure: false
