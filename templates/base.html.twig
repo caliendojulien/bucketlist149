@@ -13,12 +13,8 @@
     {# le favicon #}
     <link rel="icon"
           href="{{ asset('img/favicon.png') }}">
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-    {% block stylesheets %} {{ encore_entry_link_tags('app') }}
-        {# notre css #}
-        <link rel="stylesheet"
-              href="{{ asset('css/styles.css') }}"> {% endblock %}
-    {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
 </head>
 <body>
 <header>
@@ -27,12 +23,20 @@
         <nav class="header-nav">
             <a href="{{ path('main_home') }}" title="Go back to homepage">Home</a>
             <a href="{{ path('wish_list') }}" title="Tous les souhaits">All wishes</a>
+            <a href="{{ path('wish_new') }}" title="Ajouter un souhait">Add a wish</a>
             <a href="{{ path('main_about_us') }}" title="a propos">About us</a>
         </nav>
     </div>
 </header>
 {# contenu principal de chaque page #}
 <main>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <div class="container"> {% block body %}{% endblock %} </div>
 </main>
 {# pied-de-page du site #}

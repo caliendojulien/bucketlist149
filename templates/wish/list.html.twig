@@ -3,8 +3,28 @@
 {% block body %}
     <h2>Liste des souhaits</h2>
     <div>
+        <span
+    {{ stimulus_controller('symfony/ux-typed', {
+        strings: [
+            "I <3 Symfony",
+            "I <3 Javascript",
+            "L'ENI c'est trop bien"
+        ],
+        loop:true,
+        showCursor: true,
+        cursorChar: '🦄'
+    }) }}
+    >
+        </span>
+    </div>
+    <div>
         {% for wish in wishes %}
-            <a href="{{ path('wish_details', {'wish': wish.id}) }}">{{ wish.title }}</a>
+            <a href="{{ path('wish_details', {'wish': wish.id}) }}">
+                {{ wish.title }} ------ {{ wish.categorie.name }}
+            </a>
+            <a href="{{ path('wish_delete', {'wish': wish.id}) }}">
+                <input type="button" value="Supprimer">
+            </a>
         {% endfor %}
     </div>
 {% endblock %}
